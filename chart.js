@@ -77,7 +77,7 @@ const tooltip = svg.append("g")
       tooltip.attr("transform", `translate(${x},${y})`);
       tooltip.select("text")
           .html(`<tspan x="4em" dy="0">Glucose: ${d.glucose}</tspan>
-           <tspan x="4em" dy="1.5em">Time: ${formatTime(d.gDate)}</tspan>`);        
+           <tspan x="4em" dy="1.5em">Time: ${formatTime(d.gDate)}</tspan>`);
       tooltip.style("display", "block");
       tooltip.raise();
     })
