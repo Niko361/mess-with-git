@@ -2,18 +2,18 @@
 // contributors: Danielle Martin,
 
 
-function lineChart(dataset) {
-    const width = 600;
+function lineChart(glucoseData, mealData) {
+    const width = 1200;
     const height = 300;
-    const padding = 60;
+    const padding = 30;
   
     const xScale = d3.scaleTime()
-      .domain(d3.extent(dataset, d => d.gDate))
+      .domain(d3.extent(glucoseData, d => d.gDate))
       .range([padding, width]);
   
     const yScale = d3.scaleLinear()
-      .domain([0, d3.max(dataset, d => d.glucose)])
-      .range([height - padding, 0]);
+      .domain([0, d3.max(glucoseData, d => d.glucose)])
+      .range([height - padding, padding]);
   
     const line = d3.line()
       .x(d => xScale(d.gDate))
@@ -25,7 +25,7 @@ function lineChart(dataset) {
       .attr("height", height);
   
     svg.append("path")
-      .datum(dataset)
+      .datum(glucoseData)
       .attr("class", "line")
       .attr("d", line);
   
@@ -61,7 +61,7 @@ const tooltip = svg.append("g")
     .style("text-anchor", "middle");
 
     svg.selectAll(".dot")
-    .data(dataset)
+    .data(glucoseData)
     .enter().append("circle")
     .attr("class", "dot")
     .attr("cx", d => xScale(d.gDate))
@@ -69,16 +69,50 @@ const tooltip = svg.append("g")
     .attr("r", 5)
     .attr("opacity", 0)
     .on("mouseover", function(d) {
-        const x = xScale(d.gDate);
-        const y = yScale(d.glucose);
-        tooltip.attr("transform", `translate(${x},${y})`);
-        tooltip.select("text").text(`Glucose: ${d.glucose}`);
-        tooltip.style("display", "block");
+      const x = xScale(d.gDate);
+      const y = yScale(d.glucose);
+      tooltip.attr("transform", `translate(${x},${y})`);
+      tooltip.select("text").text(`Glucose: ${d.glucose}`);
+      tooltip.style("display", "block");
     })
     .on("mouseout", function() {
-        tooltip.style("display", "none");
+      tooltip.style("display", "none");
     })
+
     
+    svg.selectAll(".meal")
+    .data(mealData)
+    .enter()
+    .append("circle")
+    .attr("class", "meal")
+    .attr("r", 5)
+    .style("fill", "red")
+    .attr("cx", d => xScale(d.mDate))
+    .attr("cy", d => {
+      const glucose1 = glucoseData.find(g => g.gDate <= d.mDate);
+      const glucose2 = glucoseData.find(g => g.gDate >= d.mDate);
+      if (!glucose1 || !glucose2) {
+        return height - padding;
+      }
+      const mealY = (glucose1.glucose - glucose2.glucose) / (glucose1.gDate - glucose2.gDate) * (d.mDate - glucose1.gDate) + glucose1.glucose;
+      return yScale(mealY)
+    })
+    .on("mouseover", function(d) {
+      const glucose1 = glucoseData.find(g => g.gDate <= d.mDate);
+      const glucose2 = glucoseData.find(g => g.gDate >= d.mDate);
+      if (!glucose1 || !glucose2) {
+        return;
+      }
+      const mealY = (glucose1.glucose - glucose2.glucose) / (glucose1.gDate - glucose2.gDate) * (d.mDate - glucose1.gDate) + glucose1.glucose;
+      const x = xScale(d.mDate);
+      const y = yScale(mealY);
+      tooltip.attr("transform", `translate(${x},${y})`);
+      tooltip.select("text").text(`Meal: ${d.meal}`);
+      tooltip.style("display", "block");
+    })
+    .on("mouseout", function() {
+      tooltip.style("display", "none");
+    });
   };
 
   
@@ -93,11 +127,11 @@ const tooltip = svg.append("g")
             meal: d.meal
     
         }))
-    ]).then(([data1, data2]) => {
-        const data = [...data1, ...data2]; //merge the datasets
-        console.table(data1, ["mDate", "meal"]);
-        console.table(data2, ["gDate", "glucose"]);
-        lineChart(data);
+    ]).then(([glucoseData, mealData]) => {
+        const data = [glucoseData, mealData]; //merge the datasets
+        console.table(glucoseData, ["mDate", "meal"]);
+        console.table(mealData, ["gDate", "glucose"]);
+        lineChart(glucoseData, mealData);
     }).catch(error => {
       console.log(error);
     });
