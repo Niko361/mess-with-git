@@ -1,0 +1,34 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "chrome",
+      "request": "launch",
+      "name": "Debug Vite App (Chrome)",
+      "url": "http://localhost:3000",
+      "webRoot": "${workspaceFolder}" /*, THIS DOESN'T APPEAR TO BE NECESSARY
+            "sourceMapPathOverrides": {
+                "webpack:///./src/*": "${webRoot}/*"
+              },
+            "sourceMaps": true,
+            "runtimeArgs": ["--remote-debugging-port=9222"]*/
+    },
+    {
+      "type": "firefox",
+      "request": "launch",
+      "reAttach": true,
+      "name": "Launch Debug Vue (Firefox)",
+      "url": "http://localhost:3000",
+      "webRoot": "${workspaceFolder}",
+      "pathMappings": [
+        {
+          "url": "http://localhost:3000",
+          "path": "${workspaceFolder}"
+        }
+      ]
+    }
+  ]
+}

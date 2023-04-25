@@ -1,0 +1,10 @@
+{
+  "recommendations": [
+    "vue.volar",
+    "vue.vscode-typescript-vue-plugin",
+    "aaron-bond.better-comments",
+    "firefox-devtools.vscode-firefox-debug",
+    "dbaeumer.vscode-eslint",
+    "github.vscode-pull-request-github"
+  ]
+}

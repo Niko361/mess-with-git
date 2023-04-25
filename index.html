@@ -1,84 +1,16 @@
+<!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Learning Vue</title>
-    <!-- Below gives access to Vue object -->
-    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-    <link href="styles/style.css" rel="stylesheet" />
-    <script src="https://d3js.org/d3.v5.min.js"></script>
-    <script src="chart.js"></script>
 
+<head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vuetify 3</title>
 </head>
 
 <body>
-    <h1> Getting to Know Vue :) </h1>
-    <h1>Line Chart Draft</h1>
-    <p id="chart1"></p>
-    <p id="chartAlex"></p>
-      <div>
-         <img src="data/images/donut.jpg" width="50" height="50" alt="donut image" title="donut">
-      </div>
-    <!-- need this for the chart icons to work - except they still don't work!!-->
-    <!-- <svg>
-        <defs>
-          <pattern id="mealIcon" viewBox="0 0 24 24" width="24" height="24">
-            <image href="styles/icons/meal-03.png" x="0" y="0" width="24" height="24"></image>
-          </pattern>
-        </defs>
-    </svg>
-    <br> -->
-    <img src="styles/icons/meal-03.png" alt="Meal Icon" width="20" height="20">
-    <img src="styles/icons/run.png" alt="Running Icon" width="20" height="20">
-    <br>
-    <br>
-
-    <div id="app">
-        <!-- This part is controlled by Vue! -->
-        <!-- attribute binding (done by the colon) -->
-        <a :href="url">Link to a website</a>
-
-        <!-- v-if controls visibility -->
-        <p>Dani's age - {{age}}</p>
-
-        <div v-if="showBooks">
-            <ul>
-                <!-- below is for each statement -->
-                <li v-for="book in books">
-                    <h3>{{book.title}}</h3>
-                    <p>{{book.author}}</p>
-                </li>
-            </ul>
-        </div>
-
-        <button @click="toggleShowBooks">
-            <span v-if="showBooks"> Hide Books</span>
-            <span v-else> Show Books</span>
-        </button>
-
-        <button v-on:click="age++">Increase age</button>
-        <button v-on:click="age--">Decrease age</button>
-        <!-- @ is short for v-on -->
-        <div @click="changeDaniAge('2379')">Change the age by clicking me</div> 
-        <br>
-        <!-- This uses css display none but doesn't remove it-->
-        <!-- It's less expensive to use css! -->
-        <div v-show="showBooks">CURRENTLY DISPLAYING THE BOOKS :):):)</div>
-
-        <br>
-
-        <p>For this section open the console:</p>
-        <div class="box" @mouseover="handleEvent($event, 5)"> mouseover (enter)</div>
-        <div class="box" @mouseleave="handleEvent">mouseleave</div>
-        <div class="box" @dblclick="handleEvent">double click</div>
-        <div class="box" @mousemove="handleMousemove">position - {{ x }}, {{ y }}</div>
-
-
-    </div>
-
-    <script src="app.js"></script>
+    <div id="app"></div>
+    <script type="module" src="/src/main.ts"></script>
 </body>
-
 
 </html>
